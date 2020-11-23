@@ -1,30 +1,38 @@
 <script>
-	export let name;
+  import Header from "./components/Header.svelte";
+  import Button from "./components/Button.svelte";
+  import Graph from "./components/Graph.svelte";
+  import getRandomData from "../scripts/get-data";
+
+  let data = getRandomData();
+  let width;
+
+  // Handler for button
+  async function getNewData(event) {
+    data = await getRandomData();
+
+    // Uncomment to see vehicles data
+    console.log("** getting new data **");
+    console.table(data.vehicles);
+    return data;
+  }
 </script>
 
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
+
+<Header title="Car data" description="Something that resembles a description">
+  {#await data}
+    <Button>Fetching data...</Button>
+  {:then data}
+    <Button on:click={getNewData}>{data.randomNumber} Fetch new data</Button>
+  {/await}
+</Header>
+
+<main bind:clientWidth={width}>
+  {#await data}
+    Fetching data.
+  {:then data}
+    <Graph data={data.vehicles} {width} height={480} />
+  {/await}
+</main>
