@@ -12,12 +12,6 @@
     border-radius: 0.375rem;
     border: 1px solid #cecece;
   }
-
-  .information-widget rect {
-    width: 20px;
-    height: 20px;
-    transform: translate(-10px, -10px);
-  }
 </style>
 
 <g class="information-widget" transform="translate({x}, {y})">
