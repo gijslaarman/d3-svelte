@@ -17,6 +17,15 @@
 
   // Reactive variables
   $: bars = data.map((d) => {
+    // Reformat the data into something more easily useable:
+    // [
+    //   {
+    //     label: "value from set label variable",
+    //     value: "value from set value variable"
+    //   }
+    //   ...etc
+    // ]
+
     const dValue = d[value];
 
     // If value is undefined return 0
